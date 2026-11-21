@@ -7,7 +7,7 @@ namespace adas {
 
 class ExecutorImpl final : public Executor {
 public:
-    explicit ExecutorImpl(const Pose& pose) noexcept;
+    ExecutorImpl(const Pose& pose, const VehicleType type) noexcept;
 
     void Execute(const std::string& commands) noexcept override;
     Pose Query() const noexcept override;

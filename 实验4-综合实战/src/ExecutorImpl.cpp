@@ -7,7 +7,8 @@
 
 namespace adas {
 
-ExecutorImpl::ExecutorImpl(const Pose& pose) noexcept : poseHandler(pose) {}
+ExecutorImpl::ExecutorImpl(const Pose& pose, const VehicleType type) noexcept
+    : poseHandler(pose, type) {}
 
 void ExecutorImpl::Execute(const std::string& commands) noexcept {
     const auto cmders =

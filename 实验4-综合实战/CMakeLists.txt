@@ -28,8 +28,16 @@ target_link_libraries(executor_reverse_tests PRIVATE adas_executor)
 add_executable(executor_turn_round_tests tests/ExecutorTurnRoundTest.cpp)
 target_link_libraries(executor_turn_round_tests PRIVATE adas_executor)
 
+add_executable(executor_bus_tests tests/ExecutorBusTest.cpp)
+target_link_libraries(executor_bus_tests PRIVATE adas_executor)
+
+add_executable(executor_sports_car_tests tests/ExecutorSportsCarTest.cpp)
+target_link_libraries(executor_sports_car_tests PRIVATE adas_executor)
+
 enable_testing()
 add_test(NAME executor_tests COMMAND executor_tests)
 add_test(NAME executor_fast_tests COMMAND executor_fast_tests)
 add_test(NAME executor_reverse_tests COMMAND executor_reverse_tests)
 add_test(NAME executor_turn_round_tests COMMAND executor_turn_round_tests)
+add_test(NAME executor_bus_tests COMMAND executor_bus_tests)
+add_test(NAME executor_sports_car_tests COMMAND executor_sports_car_tests)

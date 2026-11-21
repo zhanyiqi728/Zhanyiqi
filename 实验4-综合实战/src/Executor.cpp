@@ -12,8 +12,9 @@ bool operator==(const Pose& lhs, const Pose& rhs) noexcept {
            std::tie(rhs.x, rhs.y, rhs.heading);
 }
 
-Executor* Executor::NewExecutor(const Pose& pose) noexcept {
-    return new (std::nothrow) ExecutorImpl(pose);
+Executor* Executor::NewExecutor(const Pose& pose,
+                                const VehicleType type) noexcept {
+    return new (std::nothrow) ExecutorImpl(pose, type);
 }
 
 }  // namespace adas

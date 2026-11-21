@@ -10,6 +10,7 @@
   - 正常：左转 90 -> 前进 1 -> 左转 90（面向反方向）。
   - 加速：前进 1 -> 左转 90 -> 前进 1 -> 左转 90。
   - 倒车：忽略（状态不变）。
+- 支持不同车辆类型（作业）：`Normal` 普通车、`Bus` 大巴、`SportsCar` 跑车，`M`/`L`/`R` 语义随类型变化。
 
 ## 综合实战设计
 
@@ -27,7 +28,7 @@
 - `src/CmderFactory.hpp/.cpp`：指令工厂与 `TR` 解析
 - `src/Point`、`src/Direction`、`src/PoseHandler`：状态数据封装
 - `src/ExecutorImpl.hpp/.cpp`：执行器实现
-- `tests/`：`ExecutorTest`、`ExecutorFastTest`、`ExecutorReverseTest`、`ExecutorTurnRoundTest`
+- `tests/`：`ExecutorTest`、`ExecutorFastTest`、`ExecutorReverseTest`、`ExecutorTurnRoundTest`、`ExecutorBusTest`、`ExecutorSportsCarTest`
 
 ## 构建和运行
 
@@ -37,6 +38,12 @@ cmake --build build
 ctest --test-dir build --output-on-failure
 ```
 
-## 说明
+## 车辆类型（作业）
 
-课件中的“作业：支持不同类型的车辆（大巴、跑车）”属于扩展练习，本目录聚焦实验四的核心内容（`TR` 指令与任务编排架构），未包含该扩展。
+`Executor::NewExecutor(pose, type)` 通过 `VehicleType` 选择车辆类型，`PoseHandler` 保存类型，指令函数对象据此编排动作组：
+
+- **Normal（普通车）**：`M` 前进 1 格（加速 2 格）；`L`/`R` 仅转向（加速时先移动 1 格）。
+- **Bus（大巴）**：`M` 前进 1 格（加速 2 格）；`L`/`R` 先移动 1 格（加速 2 格）再转向。
+- **SportsCar（跑车）**：`M` 前进 2 格（加速 4 格）；`L`/`R` 先转向再移动 1 格（加速时前后各移动 1 格）。
+
+倒车状态下：`M` 后退、`L`/`R` 反向转向，与各类型的正常语义对应。

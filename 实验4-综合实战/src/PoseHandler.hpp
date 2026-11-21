@@ -8,7 +8,7 @@ namespace adas {
 // 抽离 ExecutorImpl 的状态数据，消除 Command 与 ExecutorImpl 之间的循环依赖。
 class PoseHandler final {
 public:
-    explicit PoseHandler(const Pose& pose) noexcept;
+    PoseHandler(const Pose& pose, const VehicleType type) noexcept;
 
     PoseHandler(const PoseHandler&) = delete;
     PoseHandler& operator=(const PoseHandler&) = delete;
@@ -25,10 +25,12 @@ public:
     bool IsReverse(void) const noexcept;
 
     Pose Query(void) const noexcept;
+    VehicleType GetVehicleType(void) const noexcept;
 
 private:
     Point point;
     const Direction* facing;
+    VehicleType vehicleType;
     bool fast{false};
     bool reverse{false};
 };
